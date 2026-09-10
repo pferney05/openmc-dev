@@ -70,16 +70,16 @@ double InterpolationForTPMS::fxyz(double x, double y, double z) const
 {
   int ix0, ix1, iy0, iy1, iz0, iz1;
   double wx0, wx1, wy0, wy1, wz0, wz1;
-
+  
   interpolate_1d(x, x_grid, ix0, ix1, wx0, wx1);
   interpolate_1d(y, y_grid, iy0, iy1, wy0, wy1);
   interpolate_1d(z, z_grid, iz0, iz1, wz0, wz1);
-
-  double c00 = matrix(iz0, iy0, ix0) * wx0 + matrix(iz0, iy0, ix1) * wx1;
-  double c01 = matrix(iz1, iy0, ix0) * wx0 + matrix(iz1, iy0, ix1) * wx1;
-  double c10 = matrix(iz0, iy1, ix0) * wx0 + matrix(iz0, iy1, ix1) * wx1;
-  double c11 = matrix(iz1, iy1, ix0) * wx0 + matrix(iz1, iy1, ix1) * wx1;
-
+  
+  double c00 = matrix(ix0, iy0, iz0) * wx0 + matrix(ix1, iy0, iz0) * wx1;
+  double c01 = matrix(ix0, iy0, iz1) * wx0 + matrix(ix1, iy0, iz1) * wx1;
+  double c10 = matrix(ix0, iy1, iz0) * wx0 + matrix(ix1, iy1, iz0) * wx1;
+  double c11 = matrix(ix0, iy1, iz1) * wx0 + matrix(ix1, iy1, iz1) * wx1;
+  
   double c0 = c00 * wy0 + c10 * wy1;
   double c1 = c01 * wy0 + c11 * wy1;
   return c0 * wz0 + c1 * wz1;
